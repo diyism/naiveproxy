@@ -1,3 +1,44 @@
+# build naiveproxy caddy server with automatic letsencrypt DNS-01 challenge and naiveproxy forward:
+
+```
+$ xcaddy build \
+--with github.com/caddyserver/caddy/v2=github.com/diyism/caddy@v0.0.100 \
+--with github.com/caddy-dns/cloudflare \
+--with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
+
+$ cat Caddyfile
+{
+    servers {
+        protocols h1 h2 h3
+    }
+    acme_dns cloudflare <api token>
+}
+
+#the https://mysite.com needn't ":443" and the "route{", but the "quic:mysite.com forward_proxy" need them
+:443, mysite.com:443 {
+  route {
+  forward_proxy {
+    basic_auth myuser mypass
+    hide_ip
+    hide_via
+    probe_resistance
+  }
+  }
+  respond / "Hello, world!"
+  
+}
+```
+
+# build naiveproxy client:
+
+编译 (输出至 to ./out/Release/naive):
+```
+$ git clone --depth 1 https://github.com/diyism/naiveproxy.git
+$ cd naiveproxy/src
+$ ./get-clang.sh
+$ ./build.sh
+```
+
 # NaïveProxy ![build workflow](https://github.com/klzgrad/naiveproxy/actions/workflows/build.yml/badge.svg)
 
 NaïveProxy uses Chromium's network stack to camouflage traffic with strong censorship resistence and low detectablility. Reusing Chrome's stack also ensures best practices in performance and security.

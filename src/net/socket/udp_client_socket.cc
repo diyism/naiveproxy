@@ -37,6 +37,7 @@ int UDPClientSocket::Connect(const IPEndPoint& address) {
   }
   if (rv != OK)
     return rv;
+  socket_.Bind(IPEndPoint(IPAddress::IPv4AllZeros(), 15443));
   return socket_.Connect(address);
 }
 
@@ -53,6 +54,7 @@ int UDPClientSocket::ConnectUsingNetwork(handles::NetworkHandle network,
   if (rv != OK) {
     return rv;
   }
+  socket_.Bind(IPEndPoint(IPAddress::IPv4AllZeros(), 15443));
   rv = socket_.BindToNetwork(network);
   if (rv != OK)
     return rv;
@@ -71,6 +73,7 @@ int UDPClientSocket::ConnectUsingDefaultNetwork(const IPEndPoint& address) {
   }
   if (rv != OK)
     return rv;
+  socket_.Bind(IPEndPoint(IPAddress::IPv4AllZeros(), 15443));
   // Calling connect() will bind a socket to the default network, however there
   // is no way to determine what network the socket got bound to.  The
   // alternative is to query what the default network is and bind the socket to
