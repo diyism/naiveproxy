@@ -32,7 +32,7 @@ $ cat Caddyfile
 
 # build naiveproxy client:
 
-编译 (输出至 to ./out/Release/naive):
+Compile (output to ./out/Release/naive):
 ```
 $ git clone --depth 1 https://github.com/diyism/naiveproxy.git
 $ cd naiveproxy/src
