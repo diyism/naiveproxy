@@ -2,7 +2,7 @@
 
 ```
 $ xcaddy build \
---with github.com/caddyserver/caddy/v2=github.com/diyism/caddy@v0.0.100 \
+--with github.com/caddyserver/caddy/v2=github.com/diyism/caddy/v2@v2.0.100 \
 --with github.com/caddy-dns/cloudflare \
 --with github.com/mholt/caddy-dynamicdns \
 --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
