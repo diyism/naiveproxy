@@ -30,6 +30,11 @@ $ cat Caddyfile
 }
 
 welcome_ip=... welcome_port=... ./caddy start
+
+#get welcome_ip and welcome_port from client machine:
+echo "hello" | socat - UDP4-SENDTO:152.70.250.236:5353,sourceport=15443,reuseaddr
+echo "hello" | socat - UDP4-SENDTO:131.186.27.157:5353,sourceport=15443,reuseaddr
+
 ```
 
 # build naiveproxy client:
