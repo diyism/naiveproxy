@@ -28,6 +28,8 @@ $ cat Caddyfile
   respond / "Hello, world!"
   
 }
+
+welcome_ip=... welcome_port=... ./caddy start
 ```
 
 # build naiveproxy client:
