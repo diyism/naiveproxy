@@ -22,6 +22,7 @@ $ cat Caddyfile
         domains {
           <domain name>
         }
+        versions ipv4
     }
 }
 
