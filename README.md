@@ -10,9 +10,19 @@ $ xcaddy build \
 $ cat Caddyfile
 {
     servers {
-        protocols h1 h2 h3
+        protocols h3
     }
+
+    #disable http port 80:
+    auto_https disable_redirects
+
     acme_dns cloudflare <api token>
+    dynamic_dns {
+        provider cloudflare <api token>
+        domains {
+          <domain name>
+        }
+    }
 }
 
 #the https://mysite.com needn't ":443" and the "route{", but the "quic:mysite.com forward_proxy" need them
