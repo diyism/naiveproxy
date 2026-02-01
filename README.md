@@ -22,7 +22,7 @@ $ cat Caddyfile
     dynamic_dns {
         provider cloudflare <api token>
         domains {
-          <domain name>
+          <top domain name> <first part>
         }
         versions ipv4
     }
@@ -47,6 +47,9 @@ welcome_ip=... welcome_port=... ./caddy start
 #get welcome_ip and welcome_port from client machine:
 echo "hello" | socat - UDP4-SENDTO:152.70.250.236:5353,sourceport=15443,reuseaddr
 echo "hello" | socat - UDP4-SENDTO:131.186.27.157:5353,sourceport=15443,reuseaddr
+
+#client side:
+while true; do port_ip=$(dig idx12_port.gofork.org @223.5.5.5 +short | head -1); host_ip=$(dig idx12.gofork.org @223.5.5.5 +short | head -1); IFS='.' read -r o1 o2 o3 o4 <<< "$port_ip"; port=$((o3 * 256 + o4)); nohup /usr/bin/naive_with_fixed_source_port --listen=socks://100.71.153.100:8083 --host-resolver-rules="MAP idx12.gofork.org $host_ip" --proxy=quic://diyism:fuckccp8964@idx12.gofork.org:$port >/dev/null 2>&1; sleep 1; done &
 
 ```
 
