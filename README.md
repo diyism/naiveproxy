@@ -29,7 +29,7 @@ $ cat Caddyfile
 }
 
 #the https://mysite.com needn't ":443" and the "route{", but the "quic:mysite.com forward_proxy" need them
-:443, mysite.com:443 {
+:443, sub.mysite.com:443 {
   route {
   forward_proxy {
     basic_auth myuser mypass
@@ -49,7 +49,7 @@ echo "hello" | socat - UDP4-SENDTO:152.70.250.236:5353,sourceport=15443,reuseadd
 echo "hello" | socat - UDP4-SENDTO:131.186.27.157:5353,sourceport=15443,reuseaddr
 
 #client side:
-while true; do port_ip=$(dig idx12_port.gofork.org @223.5.5.5 +short | head -1); host_ip=$(dig idx12.gofork.org @223.5.5.5 +short | head -1); IFS='.' read -r o1 o2 o3 o4 <<< "$port_ip"; port=$((o3 * 256 + o4)); nohup /usr/bin/naive_with_fixed_source_port --listen=socks://100.71.153.100:8083 --host-resolver-rules="MAP idx12.gofork.org $host_ip" --proxy=quic://diyism:fuckccp8964@idx12.gofork.org:$port >/dev/null 2>&1; sleep 1; done &
+while true; do port_ip=$(dig sub_port.mysite.com @223.5.5.5 +short | head -1); host_ip=$(dig sub.mysite.com @223.5.5.5 +short | head -1); IFS='.' read -r o1 o2 o3 o4 <<< "$port_ip"; port=$((o3 * 256 + o4)); nohup /usr/bin/naive_with_fixed_source_port --listen=socks://100.71.153.100:8083 --host-resolver-rules="MAP sub.mysite.com $host_ip" --proxy=quic://diyism:fuckccp8964@sub.mysite.com:$port >/dev/null 2>&1; sleep 1; done &
 
 ```
 
