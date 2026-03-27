@@ -27,10 +27,16 @@ $ cat Caddyfile
         }
         versions ipv4
     }
+
+    tailscale {
+        auth_key tskey-auth-...
+    }
 }
 
 #the https://mysite.com needn't ":443" and the "route{", but the "quic:mysite.com forward_proxy" need them
 :443, sub.mysite.com:443 {
+  bind tailscale/ 0.0.0.0
+
   route {
   forward_proxy {
     basic_auth myuser mypass
