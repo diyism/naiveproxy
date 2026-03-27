@@ -58,7 +58,8 @@ echo "hello" | socat - UDP4-SENDTO:131.186.27.157:5353,sourceport=15443,reuseadd
 #client side:
 while true; do port_ip=$(dig sub_port.mysite.com @223.5.5.5 +short | head -1); host_ip=$(dig sub.mysite.com @223.5.5.5 +short | head -1); IFS='.' read -r o1 o2 o3 o4 <<< "$port_ip"; port=$((o3 * 256 + o4)); nohup /usr/bin/naive_with_fixed_source_port --listen=socks://100.71.153.100:8083 --host-resolver-rules="MAP sub.mysite.com $host_ip" --proxy=quic://diyism:fuckccp8964@sub.mysite.com:$port >/dev/null 2>&1; sleep 1; done &
 
-用"TS_DEBUG_MTU=1400 ts-proxy"+"TS_DEBUG_MTU=1400 caddy-tailscale" 进行userspace tsd 到userspace tsd的quic转发, 可以避免报错QUIC path validation fail(source ip 127.0.0.1)
+用"TS_DEBUG_MTU=1400 ts-proxy-fixed"+"TS_DEBUG_MTU=1400 caddy-tailscale" 进行userspace tsd 到userspace tsd的quic转发, 可以避免报错QUIC path validation fail(source ip 127.0.0.1):
+while true; do TS_DEBUG_MTU=1400 nohup ./ts-proxy-fixed  -udp 100.1.1.1:12443=100.2.2.2:443 >/dev/null 2>&1;sleep 1; done &
 
 ```
 
